@@ -24,6 +24,7 @@ jobs:
 
       - name: Terraform Init
         run: terraform init -lock-timeout=5m
+        working-directory: project/dev/
 
       - name: Terraform Validate
         run: terraform validate
@@ -35,6 +36,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_TERRAFORM: true
           VALIDATE_GITLEAKS: true
+          VALIDATE_YAML: true
+          VALIDATE_MARKDOWN: true
+          VALIDATE_GITHUB_ACTIONS: true
+
 
       - name: Terraform Plan
         run: terraform plan -lock-timeout=5m
+        working-directory: project/dev/
