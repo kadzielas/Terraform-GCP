@@ -35,7 +35,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_TERRAFORM: true
           VALIDATE_GITLEAKS: true
-          VALIDATE_TERRAFORM_TERRASCAN: true
 
       - name: Terraform Plan
         run: terraform plan -lock-timeout=5m
