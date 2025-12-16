@@ -3,8 +3,11 @@ module "service_accounts" {
   project_id = var.project_id
 
   accounts = {
-    "roles/storage.objectAdmin" = {
-      display_name         = "${locals.prefix}sa-github"
+    "${local.prefix}sa-github" = {
+      display_name = "Service Account for GitHub Actions"
+      roles = [
+        "roles/storage.objectAdmin"
+      ]
       is_workload_identity = true
     }
   }
