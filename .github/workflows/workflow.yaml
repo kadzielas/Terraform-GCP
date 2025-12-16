@@ -1,0 +1,46 @@
+name: General checks
+on:
+  pull_request:
+    branches:
+      - main
+      - dev
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.pull_request.head.ref || github.ref }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.14.2
+
+      # - name: Terraform Init
+      #   run: terraform init
+      #   working-directory: project/dev/
+
+      # - name: Terraform Validate
+      #   run: terraform validate
+      #   working-directory: project/dev/
+
+      - name: Lint code
+        uses: github/super-linter@v4
+        env:
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_TERRAFORM: true
+          VALIDATE_GITLEAKS: true
+          VALIDATE_YAML: true
+          VALIDATE_MARKDOWN: true
+          VALIDATE_GITHUB_ACTIONS: true
+
+      # - name: Terraform Plan
+      #   run: terraform plan
+      #   working-directory: project/dev/
