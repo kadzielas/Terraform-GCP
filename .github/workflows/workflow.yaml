@@ -17,6 +17,17 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref || github.ref }}
 
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.14.2
+
+      - name: Terraform Init
+        run: terraform init -lock-timeout=5m
+
+      - name: Terraform Validate
+        run: terraform validate
+
       - name: Lint code
         uses: github/super-linter@v4
         env:
@@ -26,16 +37,5 @@ jobs:
           VALIDATE_GITLEAKS: true
           VALIDATE_TERRAFORM_TERRASCAN: true
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: 1.14.2
-
-      - name: Terraform Init
-        run: terraform init -lock-timeout=5m
-      
-      - name: Terraform Validate
-        run: terraform validate
-      
       - name: Terraform Plan
         run: terraform plan -lock-timeout=5m
