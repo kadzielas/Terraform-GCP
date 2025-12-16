@@ -7,8 +7,8 @@ variable "accounts" {
   description = "Map of service accounts to create."
   type = map(object({
     display_name         = optional(string)
-    roles                = optional(list(string), [])
-    is_workload_identity = optional(bool, false)
+    roles                = optional(list(string))
+    is_workload_identity = optional(bool)
   }))
   default = {}
 }
