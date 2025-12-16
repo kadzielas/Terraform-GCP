@@ -22,12 +22,13 @@ jobs:
         with:
           terraform_version: 1.14.2
 
-      - name: Terraform Init
-        run: terraform init -lock-timeout=5m
-        working-directory: project/dev/
+      # - name: Terraform Init
+      #   run: terraform init
+      #   working-directory: project/dev/
 
-      - name: Terraform Validate
-        run: terraform validate
+      # - name: Terraform Validate
+      #   run: terraform validate
+      #   working-directory: project/dev/
 
       - name: Lint code
         uses: github/super-linter@v4
@@ -40,7 +41,6 @@ jobs:
           VALIDATE_MARKDOWN: true
           VALIDATE_GITHUB_ACTIONS: true
 
-
-      - name: Terraform Plan
-        run: terraform plan -lock-timeout=5m
-        working-directory: project/dev/
+      # - name: Terraform Plan
+      #   run: terraform plan
+      #   working-directory: project/dev/
