@@ -33,3 +33,28 @@ output "primary" {
   description = "The `google_sql_database_instance` resource representing the primary instance"
   sensitive   = true
 }
+
+output "databases" {
+  value = {
+    for name, db in google_sql_database.databases : name => {
+      id        = db.id
+      name      = db.name
+      charset   = db.charset
+      collation = db.collation
+      self_link = db.self_link
+    }
+  }
+  description = "Database details"
+}
+
+output "users" {
+  value = {
+    for name, user in google_sql_user.users : name => {
+      id        = user.id
+      name      = user.name
+      type      = user.type
+      self_link = user.sql_server_user_details
+    }
+  }
+  description = "User details (without passwords)"
+}

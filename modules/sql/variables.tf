@@ -161,12 +161,62 @@ variable "ip_configuration" {
 }
 
 variable "database_flags" {
-  description = "The database flags for the Cloud SQL instance. See [more details](https://cloud.google.com/sql/docs/postgres/flags)"
+  description = "The database flags for the Cloud SQL instance."
   type = list(object({
     name  = string
     value = string
   }))
   default = []
+}
+
+variable "databases" {
+  description = "Databases to create."
+  type = map(object({
+    charset         = optional(string, "UTF8")
+    collation       = optional(string, "en_US.UTF8")
+    deletion_policy = optional(string, "DELETE")
+  }))
+  default = {}
+}
+
+variable "users" {
+  description = "Users to create (key = username)."
+  type = map(object({
+    type            = optional(string, "BUILT_IN")
+    deletion_policy = optional(string, "DELETE")
+    password_policy = optional(object({
+      allowed_failed_attempts      = optional(number)
+      password_expiration_duration = optional(string)
+      enable_failed_attempts_check = optional(bool)
+      enable_password_verification = optional(bool)
+    }))
+  }))
+  default = {}
+}
+
+variable "user_names" {
+  description = "User names to create (key = username, value = username)."
+  type        = map(string)
+  default     = {}
+}
+
+variable "user_passwords" {
+  description = "User passwords (key = username, value = password)."
+  type        = map(string)
+  sensitive   = true
+  default     = {}
+}
+
+variable "user_types" {
+  description = "User types (key = username, value = type)."
+  type        = map(string)
+  default     = {}
+}
+
+variable "user_deletion_policies" {
+  description = "User deletion policies (key = username, value = policy)."
+  type        = map(string)
+  default     = {}
 }
 
 variable "module_depends_on" {
