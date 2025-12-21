@@ -1,102 +1,138 @@
 variable "project_id" {
-  description = "The ID of the project in which the resource belongs."
+  description = "Target GCP project ID for resources."
   type        = string
 }
 
 variable "name" {
-  description = "description"
+  description = "Unique name for the SQL instance."
   type        = string
   default     = ""
 }
 
 variable "region" {
-  description = "description"
+  description = "GCP region for resource deployment."
   type        = string
   default     = "europe-central2"
 }
 
+variable "zone" {
+  description = "The zone for the Cloud SQL instance."
+  type        = string
+  default     = null
+}
+
 variable "labels" {
-  description = "description"
+  description = "Resource labels for filtering and billing."
   type        = map(string)
   default     = {}
 }
 
 variable "database_version" {
-  description = ""
-  type = 
-  default = 
+  description = "Database engine type and version."
+  type        = string
+  default     = "POSTGRES_15"
 }
 
 variable "maintenance_version" {
-  description = ""
-  type = 
-  default = 
+  description = "Specific maintenance version for the instance."
+  type        = string
+  default     = null
 }
 
 variable "encryption_key_name" {
-  description = ""
-  type = 
-  default = 
+  description = "KMS key name for disk encryption."
+  type        = string
+  default     = null
 }
 
 variable "deletion_protection" {
-  description = ""
-  type = 
-  default = 
+  description = "Prevents Terraform from destroying the instance."
+  type        = bool
+  default     = false
 }
 
 variable "root_password" {
-  description = ""
-  type = 
-  default = 
+  description = "Initial password for the root user."
+  type        = string
+  default     = null
 }
 
 variable "instance_type" {
-  description = ""
-  type = 
-  default = 
+  description = "Type of instance: master or replica."
+  type        = string
+  default     = "CLOUD_SQL_INSTANCE"
 }
 
 variable "tier" {
-  description = ""
-  type = 
-  default = 
+  description = "Machine type determining CPU and RAM."
+  type        = string
+  default     = "db-f1-micro"
 }
 
 variable "edition" {
-  description = ""
-  type = 
-  default = 
+  description = "Cloud SQL edition: Enterprise or Plus."
+  type        = string
+  default     = "ENTERPRISE"
 }
 
 variable "activation_policy" {
-  description = ""
-  type = 
-  default = 
+  description = "Controls when the instance is active."
+  type        = string
+  default     = "ALWAYS"
 }
 
 variable "availability_type" {
-  description = ""
-  type = 
-  default = 
+  description = "Specifies HA (REGIONAL) or ZONAL availability."
+  type        = string
+  default     = "ZONAL"
 }
 
 variable "deletion_protection_enabled" {
-  description = ""
-  type = 
-  default = 
+  description = "GCP API flag preventing accidental deletion."
+  type        = bool
+  default     = false
 }
 
 variable "retain_backups_on_delete" {
-  description = ""
-  type = 
-  default = 
+  description = "Preserve backups when instance is deleted."
+  type        = bool
+  default     = false
+}
+
+variable "disk_autoresize" {
+  description = "Configuration to increase storage size."
+  type        = bool
+  default     = false
+}
+
+variable "disk_autoresize_limit" {
+  description = "The maximum size to which storage can be auto increased."
+  type        = number
+  default     = 0
+}
+
+variable "disk_size" {
+  description = "The disk size (in GB) for the Cloud SQL instance."
+  type        = number
+  default     = 10
+}
+
+variable "disk_type" {
+  description = "The disk type for the Cloud SQL instance."
+  type        = string
+  default     = "PD_HDD"
+}
+
+variable "pricing_plan" {
+  description = "The pricing plan for the Cloud SQL instance."
+  type        = string
+  default     = "PER_USE"
 }
 
 variable "backup_configuration" {
-  description = ""
+  description = "Settings for automated backups and retention."
   type = object({
-    backups_enabled                        = optional(bool, false)
+    backups_enabled                = optional(bool, false)
     start_time                     = optional(string)
     location                       = optional(string)
     point_in_time_recovery_enabled = optional(bool, false)
@@ -108,7 +144,7 @@ variable "backup_configuration" {
 }
 
 variable "ip_configuration" {
-  description = ""
+  description = "Network access, private IP, and SSL."
   type = object({
     authorized_networks                           = optional(list(map(string)), [])
     ipv4_enabled                                  = optional(bool, true)
@@ -122,4 +158,19 @@ variable "ip_configuration" {
     server_ca_pool                                = optional(string)
   })
   default = {}
+}
+
+variable "database_flags" {
+  description = "The database flags for the Cloud SQL instance. See [more details](https://cloud.google.com/sql/docs/postgres/flags)"
+  type = list(object({
+    name  = string
+    value = string
+  }))
+  default = []
+}
+
+variable "module_depends_on" {
+  description = "List of modules or resources this module depends on."
+  type        = list(any)
+  default     = []
 }

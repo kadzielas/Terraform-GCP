@@ -1,5 +1,5 @@
 variable "project_id" {
-  description = "The ID of the project in which the resource belongs."
+  description = "Target GCP project ID for resources."
   type        = string
 }
 

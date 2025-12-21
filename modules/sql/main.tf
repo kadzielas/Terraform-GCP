@@ -9,6 +9,7 @@ resource "google_sql_database_instance" "main" {
   root_password       = var.root_password
   instance_type       = var.instance_type
 
+
   settings {
     tier                        = var.tier
     edition                     = var.edition
@@ -16,6 +17,13 @@ resource "google_sql_database_instance" "main" {
     availability_type           = var.availability_type
     deletion_protection_enabled = var.deletion_protection_enabled
     retain_backups_on_delete    = var.retain_backups_on_delete
+    user_labels                 = var.labels
+
+    disk_autoresize       = var.disk_autoresize
+    disk_autoresize_limit = var.disk_autoresize_limit
+    disk_size             = var.disk_size
+    disk_type             = var.disk_type
+    pricing_plan          = var.pricing_plan
 
     dynamic "backup_configuration" {
       for_each = var.backup_configuration != null ? 1 : 0
@@ -65,5 +73,34 @@ resource "google_sql_database_instance" "main" {
       }
 
     }
+  }
+
+  dynamic "database_flags" {
+    for_each = var.database_flags != null ? 1 : 0
+    content {
+      name  = lookup(database_flags.value, "name", null)
+      value = lookup(database_flags.value, "value", null)
+    }
+  }
+
+  dynamic "location_preference" {
+    for_each = var.zone != null ? 1 : 0
+    content {
+      zone                   = var.zone
+      secondary_zone         = local.is_secondary_instance ? null : var.secondary_zone
+      follow_gae_application = local.is_secondary_instance ? null : var.follow_gae_application
+    }
+  }
+
+  lifecycle {
+    ignore_changes = [
+      settings[0].disk_size
+    ]
+  }
+}
+
+resource "null_resource" "module_depends_on" {
+  triggers = {
+    value = length(var.module_depends_on)
   }
 }
