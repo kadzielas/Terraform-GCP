@@ -1,4 +1,4 @@
-resource "google_sql_database" "databases" {
+resource "google_sql_database" "database" {
   for_each = var.databases
 
   project = var.project_id
