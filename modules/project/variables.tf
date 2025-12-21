@@ -3,9 +3,9 @@ variable "project_id" {
   type        = string
 }
 
-variable "service" {
+variable "services" {
   description = "The API service to enable for the project."
-  type        = set(list(string))
+  type        = list(string)
 }
 
 variable "disable_on_destroy" {
