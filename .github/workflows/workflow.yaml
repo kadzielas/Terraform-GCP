@@ -11,11 +11,23 @@ permissions:
 jobs:
   checks:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.ref || github.ref }}
+
+      # - name: Authenticate to GCP
+      #   uses: google-github-actions/auth@v3
+      #   with:
+      #     project_id: ${{ secrets.GCP_PROJECT_ID }}
+      #     workload_identity_provider: ${{ secrets.GCP_WIP }}
+      #     service_account_email: ${{ secrets.GCP_SA_EMAIL }}
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3

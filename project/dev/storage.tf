@@ -9,4 +9,6 @@ module "bucket" {
   storage_class               = "REGIONAL"
   uniform_bucket_level_access = true
   force_destroy               = true
+
+  depends_on = [module.project]
 }
