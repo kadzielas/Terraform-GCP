@@ -9,7 +9,6 @@ resource "google_sql_database_instance" "main" {
   root_password       = var.root_password
   instance_type       = var.instance_type
 
-
   settings {
     tier                        = var.tier
     edition                     = var.edition
@@ -44,6 +43,7 @@ resource "google_sql_database_instance" "main" {
       }
     }
   }
+
   dynamic "ip_configuration" {
     for_each = var.ip_configuration != null ? 1 : 0
     content {
@@ -71,7 +71,6 @@ resource "google_sql_database_instance" "main" {
           allowed_consumer_projects = ip_configuration.value.psc_allowed_consumer_projects
         }
       }
-
     }
   }
 
