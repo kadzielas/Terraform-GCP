@@ -93,6 +93,20 @@ variable "retain_backups_on_delete" {
   default = 
 }
 
+variable "backup_configuration" {
+  description = ""
+  type = object({
+    backups_enabled                        = optional(bool, false)
+    start_time                     = optional(string)
+    location                       = optional(string)
+    point_in_time_recovery_enabled = optional(bool, false)
+    transaction_log_retention_days = optional(string)
+    retained_backups               = optional(number)
+    retention_unit                 = optional(string)
+  })
+  default = {}
+}
+
 variable "ip_configuration" {
   description = ""
   type = object({

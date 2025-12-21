@@ -20,13 +20,14 @@ resource "google_sql_database_instance" "main" {
     dynamic "backup_configuration" {
       for_each = var.backup_configuration != null ? 1 : 0
       content {
-        enabled                        = var.backups_enabled
+        enabled                        = lookup(backup_configuration.value, "backups_enabled", false)
         start_time                     = lookup(backup_configuration.value, "start_time", null)
         location                       = lookup(backup_configuration.value, "location", null)
+        point_in_time_recovery_enabled = lookup(backup_configuration.value, "point_in_time_recovery_enabled", false)
         transaction_log_retention_days = lookup(backup_configuration.value, "transaction_log_retention_days", null)
 
         dynamic "backup_retention_settings" {
-          for_each = var.backup_retention_settings != null ? 1 : 0
+          for_each = var.backup_configuration.backup_retention_settings != null ? 1 : 0
           content {
             retained_backups = lookup(backup_retention_settings.value, "retained_backups", null)
             retention_unit   = lookup(backup_retention_settings.value, "retention_unit", null)
