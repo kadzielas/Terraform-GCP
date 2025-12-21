@@ -11,4 +11,6 @@ module "service_accounts" {
       is_workload_identity = true
     }
   }
+
+  depends_on = [module.project]
 }
