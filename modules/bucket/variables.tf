@@ -1,46 +1,46 @@
 variable "project_id" {
+  description = "Target GCP project ID for resources."
   type        = string
-  description = "The ID of the project in which the resource belongs."
 }
 
 variable "name" {
+  description = "Unique name for the SQL instance."
   type        = string
   default     = ""
-  description = "description"
 }
 
 variable "region" {
+  description = "GCP region for resource deployment."
   type        = string
   default     = "europe-central2"
-  description = "description"
 }
 
 variable "labels" {
+  description = "Resource labels for filtering and billing."
   type        = map(string)
   default     = {}
-  description = "description"
 }
 
 variable "uniform_bucket_level_access" {
+  description = "description"
   type        = bool
   default     = true
-  description = "description"
 }
 
 variable "public_access_prevention" {
+  description = "description"
   type        = string
   default     = "enforced"
-  description = "description"
 }
 
 variable "storage_class" {
+  description = "description"
   type        = string
   default     = "STANDARD"
-  description = "description"
 }
 
 variable "force_destroy" {
+  description = "description"
   type        = bool
   default     = false
-  description = "description"
 }
