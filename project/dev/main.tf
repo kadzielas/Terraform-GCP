@@ -20,14 +20,14 @@ module "project" {
 module "workload_identity_pools" {
   source = "../../modules/workload_identity_pool"
 
-  workload_identity_pool_id = "${local.prefix}-wip"
-  display_name              = "${local.prefix}-wip"
+  workload_identity_pool_id = "${local.prefix}wip"
+  display_name              = "${local.prefix}wip"
   description               = "A workload identity pool for my project."
   disabled                  = false
 
   oidc_providers = {
-    github_actions = {
-      display_name        = "${local.prefix}-gh-actions-provider"
+    github-provider = {
+      display_name        = "${local.prefix}gh-actions-provider"
       description         = "GitHub Actions OIDC provider"
       disabled            = false
       attribute_condition = <<EOT
@@ -38,6 +38,7 @@ module "workload_identity_pools" {
         "google.subject"       = "assertion.sub"
         "attribute.actor"      = "assertion.actor"
         "attribute.aud"        = "assertion.aud"
+        "attribute.aud"        = "assertion.ref"
         "attribute.repository" = "assertion.repository"
       }
       oidc_issuer_uri   = "https://token.actions.githubusercontent.com"
