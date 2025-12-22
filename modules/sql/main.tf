@@ -25,7 +25,7 @@ resource "google_sql_database_instance" "main" {
     pricing_plan          = var.pricing_plan
 
     dynamic "backup_configuration" {
-      for_each = var.backup_configuration != null ? 1 : 0
+      for_each = [var.backup_configuration] != null ? [1] : [0]
       content {
         enabled                        = lookup(backup_configuration.value, "backups_enabled", false)
         start_time                     = lookup(backup_configuration.value, "start_time", null)
@@ -34,7 +34,7 @@ resource "google_sql_database_instance" "main" {
         transaction_log_retention_days = lookup(backup_configuration.value, "transaction_log_retention_days", null)
 
         dynamic "backup_retention_settings" {
-          for_each = var.backup_configuration.backup_retention_settings != null ? 1 : 0
+          for_each = [var.backup_configuration.backup_retention_settings] != null ? [1] : [0]
           content {
             retained_backups = lookup(backup_retention_settings.value, "retained_backups", null)
             retention_unit   = lookup(backup_retention_settings.value, "retention_unit", null)
@@ -45,7 +45,7 @@ resource "google_sql_database_instance" "main" {
   }
 
   dynamic "ip_configuration" {
-    for_each = var.ip_configuration != null ? 1 : 0
+    for_each = var.ip_configuration != null ? [1] : [0]
     content {
       ipv4_enabled                                  = lookup(ip_configuration.value, "ipv4_enabled", null)
       private_network                               = lookup(ip_configuration.value, "private_network", null)
@@ -56,7 +56,7 @@ resource "google_sql_database_instance" "main" {
       server_ca_pool                                = lookup(ip_configuration.value, "server_ca_pool", null)
 
       dynamic "authorized_networks" {
-        for_each = var.ip_configuration.authorized_networks != null ? 1 : 0
+        for_each = var.ip_configuration.authorized_networks != null ? [1] : [0]
         content {
           expiration_time = lookup(authorized_networks.value, "expiration_time", null)
           name            = lookup(authorized_networks.value, "name", null)
@@ -65,7 +65,7 @@ resource "google_sql_database_instance" "main" {
       }
 
       dynamic "psc_config" {
-        for_each = var.ip_configuration.psc_config != null ? 1 : 0
+        for_each = var.ip_configuration.psc_config != null ? [1] : [0]
         content {
           psc_enabled               = ip_configuration.value.psc_enabled
           allowed_consumer_projects = ip_configuration.value.psc_allowed_consumer_projects
@@ -75,7 +75,7 @@ resource "google_sql_database_instance" "main" {
   }
 
   dynamic "database_flags" {
-    for_each = var.database_flags != null ? 1 : 0
+    for_each = var.database_flags != null ? [1] : [0]
     content {
       name  = lookup(database_flags.value, "name", null)
       value = lookup(database_flags.value, "value", null)
@@ -83,7 +83,7 @@ resource "google_sql_database_instance" "main" {
   }
 
   dynamic "location_preference" {
-    for_each = var.zone != null ? 1 : 0
+    for_each = var.zone != null ? [1] : [0]
     content {
       zone                   = var.zone
       secondary_zone         = local.is_secondary_instance ? null : var.secondary_zone
