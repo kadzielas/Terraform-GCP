@@ -13,6 +13,7 @@ resource "google_iam_workload_identity_pool_provider" "oidc" {
   display_name                       = each.value.display_name
   description                        = each.value.description
   disabled                           = each.value.disabled
+  attribute_condition                = each.value.attribute_condition
   attribute_mapping                  = each.value.attribute_mapping
 
   oidc {

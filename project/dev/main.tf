@@ -30,15 +30,12 @@ module "workload_identity_pools" {
       display_name        = "${local.prefix}gh-actions-provider"
       description         = "GitHub Actions OIDC provider"
       disabled            = false
-      attribute_condition = <<EOT
-        assertion.repository_owner_id == "159706121" &&
-        attribute.repository == "kadzielas/Terraform-GCP" &&
-      EOT
+      attribute_condition = "attribute.repository == 'kadzielas/Terraform-GCP' && attribute.aud == '159706121'"
       attribute_mapping = {
         "google.subject"       = "assertion.sub"
         "attribute.actor"      = "assertion.actor"
         "attribute.aud"        = "assertion.aud"
-        "attribute.aud"        = "assertion.ref"
+        "attribute.ref"        = "assertion.ref"
         "attribute.repository" = "assertion.repository"
       }
       oidc_issuer_uri   = "https://token.actions.githubusercontent.com"
