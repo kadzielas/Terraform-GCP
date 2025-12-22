@@ -38,8 +38,7 @@ module "workload_identity_pools" {
         "attribute.ref"        = "assertion.ref"
         "attribute.repository" = "assertion.repository"
       }
-      oidc_issuer_uri   = "https://token.actions.githubusercontent.com"
-      allowed_audiences = ["159706121"]
+      oidc_issuer_uri = "https://token.actions.githubusercontent.com"
     }
   }
 }
