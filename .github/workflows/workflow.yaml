@@ -30,6 +30,9 @@ jobs:
           service_account: ${{ secrets.GCP_SA_EMAIL }}
           token_format: 'access_token'
 
+      - name: Confirm GCP Authentication
+        run: gcloud auth list
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
@@ -43,17 +46,6 @@ jobs:
         run: terraform validate
         working-directory: project/dev/
 
-      # - name: Lint code
-      #   uses: github/super-linter@v4
-      #   env:
-      #     DEFAULT_BRANCH: main
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     VALIDATE_TERRAFORM: true
-      #     VALIDATE_GITLEAKS: true
-      #     VALIDATE_YAML: true
-      #     VALIDATE_MARKDOWN: true
-      #     VALIDATE_GITHUB_ACTIONS: true
-
-      # - name: Terraform Plan
-      #   run: terraform plan
-      #   working-directory: project/dev/
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
+        working-directory: project/dev/
