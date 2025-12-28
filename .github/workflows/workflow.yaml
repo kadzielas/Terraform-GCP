@@ -22,36 +22,37 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref || github.ref }}
 
-      # - name: Authenticate to GCP
-      #   uses: google-github-actions/auth@v3
-      #   with:
-      #     project_id: ${{ secrets.GCP_PROJECT_ID }}
-      #     workload_identity_provider: ${{ secrets.GCP_WIP }}
-      #     service_account_email: ${{ secrets.GCP_SA_EMAIL }}
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v3
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          workload_identity_provider: ${{ secrets.GCP_WIP }}
+          service_account: ${{ secrets.GCP_SA_EMAIL }}
+          token_format: 'access_token'
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.14.2
 
-      # - name: Terraform Init
-      #   run: terraform init
-      #   working-directory: project/dev/
+      - name: Terraform Init
+        run: terraform init
+        working-directory: project/dev/
 
-      # - name: Terraform Validate
-      #   run: terraform validate
-      #   working-directory: project/dev/
+      - name: Terraform Validate
+        run: terraform validate
+        working-directory: project/dev/
 
-      - name: Lint code
-        uses: github/super-linter@v4
-        env:
-          DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VALIDATE_TERRAFORM: true
-          VALIDATE_GITLEAKS: true
-          VALIDATE_YAML: true
-          VALIDATE_MARKDOWN: true
-          VALIDATE_GITHUB_ACTIONS: true
+      # - name: Lint code
+      #   uses: github/super-linter@v4
+      #   env:
+      #     DEFAULT_BRANCH: main
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     VALIDATE_TERRAFORM: true
+      #     VALIDATE_GITLEAKS: true
+      #     VALIDATE_YAML: true
+      #     VALIDATE_MARKDOWN: true
+      #     VALIDATE_GITHUB_ACTIONS: true
 
       # - name: Terraform Plan
       #   run: terraform plan

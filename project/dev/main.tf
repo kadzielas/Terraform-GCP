@@ -30,16 +30,13 @@ module "workload_identity_pools" {
       display_name        = "${local.prefix}gh-actions-provider"
       description         = "GitHub Actions OIDC provider"
       disabled            = false
-      attribute_condition = "attribute.repository == 'kadzielas/Terraform-GCP' && attribute.aud == '159706121'"
+      attribute_condition = "assertion.repository == \"kadzielas/Terraform-GCP\""
       attribute_mapping = {
         "google.subject"       = "assertion.sub"
-        "attribute.actor"      = "assertion.actor"
-        "attribute.aud"        = "assertion.aud"
         "attribute.ref"        = "assertion.ref"
         "attribute.repository" = "assertion.repository"
       }
-      oidc_issuer_uri   = "https://token.actions.githubusercontent.com"
-      allowed_audiences = ["159706121"]
+      oidc_issuer_uri = "https://token.actions.githubusercontent.com"
     }
   }
 }

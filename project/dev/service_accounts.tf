@@ -9,9 +9,6 @@ module "service_accounts" {
         "roles/storage.objectAdmin",
         "roles/iam.workloadIdentityUser"
       ]
-      members = [
-        "principalSet://iam.googleapis.com/${module.workload_identity_pools.workload_identity_pool_id}/attribute.repository/kadzielas/Terraform-GCP"
-      ]
       is_workload_identity = true
     }
   }
