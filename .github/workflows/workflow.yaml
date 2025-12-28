@@ -22,6 +22,14 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref || github.ref }}
 
+      - name: GCP - setup SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+      - name: GCP - info
+        run: gcloud info
+
       - name: GCP - authenticate
         uses: google-github-actions/auth@v3
         with:
@@ -38,10 +46,6 @@ jobs:
         with:
           terraform_version: 1.14.2
 
-      - name: TF - initialize configuration
-        run: terraform init
-        working-directory: project/dev/
-
       - name: TF - configure backend
         run: |
           cat <<EOF >backend.tf
@@ -51,6 +55,10 @@ jobs:
             }
           }
           EOF
+        working-directory: project/dev/
+
+      - name: TF - initialize configuration
+        run: terraform init
         working-directory: project/dev/
 
       - name: TF - validate configuration
