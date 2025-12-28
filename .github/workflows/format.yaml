@@ -11,15 +11,19 @@ permissions:
   pull-requests: read
 
 jobs:
-  terraform-format:
+  format-checks:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: "read"
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
         with:
           ref: ${{ github.event.pull_request.head.ref || github.ref }}
 
-       - name: Lint code
+      - name: Lint code
         uses: github/super-linter@v4
         env:
           DEFAULT_BRANCH: main
