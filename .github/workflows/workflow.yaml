@@ -28,6 +28,7 @@ jobs:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
           workload_identity_provider: ${{ secrets.GCP_WIP }}
           service_account: ${{ secrets.GCP_SA_EMAIL }}
+          token_format: 'access_token'
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3

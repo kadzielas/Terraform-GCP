@@ -30,11 +30,9 @@ module "workload_identity_pools" {
       display_name        = "${local.prefix}gh-actions-provider"
       description         = "GitHub Actions OIDC provider"
       disabled            = false
-      attribute_condition = "assertion.repository == '/kadzielas/Terraform-GCP/'"
+      attribute_condition = "assertion.repository == \"kadzielas/Terraform-GCP\""
       attribute_mapping = {
         "google.subject"       = "assertion.sub"
-        "attribute.actor"      = "assertion.actor"
-        "attribute.aud"        = "assertion.aud"
         "attribute.ref"        = "assertion.ref"
         "attribute.repository" = "assertion.repository"
       }
