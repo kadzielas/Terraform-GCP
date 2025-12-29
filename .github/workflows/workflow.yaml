@@ -40,7 +40,7 @@ jobs:
           # token_format: "access_token"
 
       - name: GCP - access verification
-        run: gcloud auth list
+        run: gcloud storage buckets list
 
       - name: TF - setup
         uses: hashicorp/setup-terraform@v3
