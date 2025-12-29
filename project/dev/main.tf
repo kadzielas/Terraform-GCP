@@ -26,7 +26,7 @@ module "workload_identity_pools" {
   disabled                  = false
 
   oidc_providers = {
-    github-provider = {
+    gh-pvd = {
       display_name        = "${local.prefix}gh-actions-provider"
       description         = "GitHub Actions OIDC provider"
       disabled            = false
