@@ -14,7 +14,7 @@ resource "google_sql_database" "database" {
 
   lifecycle {
     prevent_destroy      = false
-    replace_triggered_by = [google_sql_database_instance.main]
+    replace_triggered_by = [google_sql_database_instance.main.id]
   }
 }
 
@@ -44,6 +44,6 @@ resource "google_sql_user" "users" {
 
   lifecycle {
     prevent_destroy      = false
-    replace_triggered_by = [google_sql_database_instance.main]
+    replace_triggered_by = [google_sql_database_instance.main.id]
   }
 }

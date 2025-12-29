@@ -23,3 +23,8 @@ resource "google_iam_workload_identity_pool_provider" "oidc" {
 
   depends_on = [google_iam_workload_identity_pool.pool]
 }
+
+# Associate (impersonate) Service Accounts with Workload Identity Pool
+# gcloud iam service-accounts add-iam-policy-binding dev-alc25-sa-github@daring-chess-474306-h4.iam.gserviceaccount.com \
+#     --role=roles/iam.workloadIdentityUser \
+#     --member="principal://iam.googleapis.com/projects/492774125441/locations/global/workloadIdentityPools/dev-alc25-wip/subject/google.subject"
