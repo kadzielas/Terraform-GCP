@@ -206,8 +206,8 @@ variable "databases" {
 variable "users" {
   description = "Users to create (key = username)."
   type = map(object({
-    type            = optional(string, "BUILT_IN")
-    deletion_policy = optional(string, "DELETE")
+    type            = optional(string)
+    deletion_policy = optional(string)
     password_policy = optional(object({
       allowed_failed_attempts      = optional(number)
       password_expiration_duration = optional(string)
