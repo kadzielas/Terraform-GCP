@@ -39,4 +39,5 @@ module "workload_identity_pools" {
       oidc_issuer_uri = "https://token.actions.githubusercontent.com"
     }
   }
+  depends_on = [module.service_accounts]
 }
