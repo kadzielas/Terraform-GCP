@@ -1,3 +1,4 @@
+---
 name: General checks
 on:
   pull_request:

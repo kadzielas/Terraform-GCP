@@ -3,14 +3,19 @@ output "instance_name" {
   description = "The instance name for the master instance"
 }
 
+output "id" {
+  value       = google_sql_database_instance.main.id
+  description = "ID of primary instance."
+}
+
 output "public_ip_address" {
-  description = "(PRIMARY) IPv4 address assigned for the master instance"
   value       = google_sql_database_instance.default.public_ip_address
+  description = "(PRIMARY) IPv4 address assigned for the master instance"
 }
 
 output "private_ip_address" {
-  description = "(PRIVATE) IPv4 address assigned for the master instance"
   value       = google_sql_database_instance.default.private_ip_address
+  description = "(PRIVATE) IPv4 address assigned for the master instance"
 }
 
 output "instance_ip_address" {
