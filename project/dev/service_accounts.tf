@@ -7,7 +7,8 @@ module "service_accounts" {
       display_name = "Service Account for GitHub Actions"
       roles = [
         "roles/storage.objectAdmin",
-        "roles/iam.workloadIdentityUser"
+        "roles/iam.workloadIdentityUser",
+        "roles/iam.serviceAccountTokenCreator"
       ]
       is_workload_identity = true
     }
