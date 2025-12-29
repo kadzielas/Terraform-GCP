@@ -1,3 +1,7 @@
+#----------------------------------------------#
+# COMMON VARIABLES
+#----------------------------------------------#
+
 variable "project_id" {
   description = "Target GCP project ID for resources."
   type        = string
@@ -26,6 +30,10 @@ variable "labels" {
   type        = map(string)
   default     = {}
 }
+
+#----------------------------------------------#
+# RESOURCE-SPECIFIC VARIABLES
+#----------------------------------------------#
 
 variable "database_version" {
   description = "Database engine type and version."
@@ -62,6 +70,10 @@ variable "instance_type" {
   type        = string
   default     = "CLOUD_SQL_INSTANCE"
 }
+
+#----------------------------------------------#
+# SETTINGS VARIABLES
+#----------------------------------------------#
 
 variable "tier" {
   description = "Machine type determining CPU and RAM."
@@ -129,13 +141,17 @@ variable "pricing_plan" {
   default     = "PER_USE"
 }
 
+#----------------------------------------------#
+# BACKUP VARIABLES
+#----------------------------------------------#
+
 variable "backup_configuration" {
   description = "Settings for automated backups and retention."
   type = object({
-    backups_enabled                = optional(bool, false)
+    backups_enabled                = optional(bool)
     start_time                     = optional(string)
     location                       = optional(string)
-    point_in_time_recovery_enabled = optional(bool, false)
+    point_in_time_recovery_enabled = optional(bool)
     transaction_log_retention_days = optional(string)
     retained_backups               = optional(number)
     retention_unit                 = optional(string)
@@ -143,22 +159,30 @@ variable "backup_configuration" {
   default = {}
 }
 
+#----------------------------------------------#
+# IP CONFIGURATION VARIABLES
+#----------------------------------------------#
+
 variable "ip_configuration" {
   description = "Network access, private IP, and SSL."
   type = object({
-    authorized_networks                           = optional(list(map(string)), [])
-    ipv4_enabled                                  = optional(bool, true)
+    authorized_networks                           = optional(list(map(string)))
+    ipv4_enabled                                  = optional(bool)
     private_network                               = optional(string)
     ssl_mode                                      = optional(string)
     allocated_ip_range                            = optional(string)
-    enable_private_path_for_google_cloud_services = optional(bool, false)
-    psc_enabled                                   = optional(bool, false)
-    psc_allowed_consumer_projects                 = optional(list(string), [])
+    enable_private_path_for_google_cloud_services = optional(bool)
+    psc_enabled                                   = optional(bool)
+    psc_allowed_consumer_projects                 = optional(list(string))
     server_ca_mode                                = optional(string)
     server_ca_pool                                = optional(string)
   })
   default = {}
 }
+
+#----------------------------------------------#
+# DATABASE VARIABLES
+#----------------------------------------------#
 
 variable "database_flags" {
   description = "The database flags for the Cloud SQL instance."
@@ -172,9 +196,9 @@ variable "database_flags" {
 variable "databases" {
   description = "Databases to create."
   type = map(object({
-    charset         = optional(string, "UTF8")
-    collation       = optional(string, "en_US.UTF8")
-    deletion_policy = optional(string, "DELETE")
+    charset         = optional(string)
+    collation       = optional(string)
+    deletion_policy = optional(string)
   }))
   default = {}
 }
@@ -194,12 +218,6 @@ variable "users" {
   default = {}
 }
 
-variable "user_names" {
-  description = "User names to create (key = username, value = username)."
-  type        = map(string)
-  default     = {}
-}
-
 variable "user_passwords" {
   description = "User passwords (key = username, value = password)."
   type        = map(string)
@@ -211,16 +229,4 @@ variable "user_types" {
   description = "User types (key = username, value = type)."
   type        = map(string)
   default     = {}
-}
-
-variable "user_deletion_policies" {
-  description = "User deletion policies (key = username, value = policy)."
-  type        = map(string)
-  default     = {}
-}
-
-variable "module_depends_on" {
-  description = "List of modules or resources this module depends on."
-  type        = list(any)
-  default     = []
 }

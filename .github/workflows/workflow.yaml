@@ -44,7 +44,10 @@ jobs:
       - name: TF - setup
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: 1.14.2
+          terraform_version: 1.14.0
+
+      - name: TF - version
+        run: terraform version
 
       - name: TF - configure backend
         run: |
