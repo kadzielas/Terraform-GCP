@@ -98,8 +98,8 @@ resource "google_sql_database_instance" "main" {
   }
 }
 
-resource "null_resource" "module_depends_on" {
-  triggers = {
-    value = length(var.module_depends_on)
-  }
+resource "terraform_data" "module_depends_on" {
+  triggers_replace = [
+    google_sql_database_instance.main.id
+  ]
 }

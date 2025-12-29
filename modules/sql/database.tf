@@ -10,10 +10,11 @@ resource "google_sql_database" "database" {
 
   deletion_policy = each.value.deletion_policy
 
-  depends_on = [google_sql_database_instance.main]
+  depends_on = [terraform_data.module_depends_on]
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy      = false
+    replace_triggered_by = [google_sql_database_instance.main]
   }
 }
 
@@ -39,9 +40,10 @@ resource "google_sql_user" "users" {
     }
   }
 
-  depends_on = [google_sql_database_instance.main]
+  depends_on = [terraform_data.module_depends_on]
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy      = false
+    replace_triggered_by = [google_sql_database_instance.main]
   }
 }
