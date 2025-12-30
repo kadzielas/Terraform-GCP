@@ -24,8 +24,10 @@ module "workload_identity_pools" {
 }
 
 resource "google_service_account_iam_binding" "wif_binding" {
+  for_each = local.github_roles
+
   service_account_id = module.service_accounts.service_accounts["${local.prefix}sa-github"].name
-  role               = "roles/iam.workloadIdentityUser"
+  role               = each.key
 
   members = [
     "principal://iam.googleapis.com/projects/492774125441/locations/global/workloadIdentityPools/dev-alc25-wip/subject/google.subject",
