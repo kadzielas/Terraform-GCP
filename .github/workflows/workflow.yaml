@@ -26,15 +26,15 @@ jobs:
       - name: GCP - authenticate
         uses: google-github-actions/auth@v3
         with:
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
-          workload_identity_provider: ${{ secrets.GCP_WIP }}
-          service_account: ${{ secrets.GCP_SA_EMAIL }}
+          project_id: "daring-chess-474306-h4"
+          workload_identity_provider: "projects/492774125441/locations/global/workloadIdentityPools/dev-alc25-wip/providers/gh-pvd"
+          service_account: "dev-alc25-sa-github@daring-chess-474306-h4.iam.gserviceaccount.com"
           # token_format: "access_token"
 
       - name: GCP - setup SDK
         uses: google-github-actions/setup-gcloud@v2
         with:
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          project_id: "daring-chess-474306-h4"
 
       - name: GCP - access verification
         run: gcloud storage buckets list
@@ -52,7 +52,7 @@ jobs:
           cat <<EOF >backend.tf
           terraform {
             backend "gcs" {
-              bucket  = ${{ secrets.TF_BACKEND_BUCKET }}
+              bucket  = "dev-alc25-gcs-bucket"
             }
           }
           EOF
