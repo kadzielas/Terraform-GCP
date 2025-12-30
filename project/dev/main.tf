@@ -12,6 +12,7 @@ module "project" {
     "iamcredentials.googleapis.com",
     "serviceusage.googleapis.com",
     "storage-component.googleapis.com",
+    "sts.googleapis.com",
     "sql-component.googleapis.com",
     "sqladmin.googleapis.com"
   ]
