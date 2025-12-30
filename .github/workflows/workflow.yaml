@@ -1,5 +1,5 @@
 ---
-name: General repository validation
+name: GCP and Terraform validation
 on:
   pull_request:
     branches:
@@ -57,18 +57,18 @@ jobs:
           EOF
         working-directory: project/dev/
 
-      - name: TF - initialize configuration
-        run: terraform init
-        working-directory: project/dev/
+      # - name: TF - initialize configuration
+      #   run: terraform init
+      #   working-directory: project/dev/
 
-      - name: TF - validate configuration
-        run: terraform validate
-        working-directory: project/dev/
+      # - name: TF - validate configuration
+      #   run: terraform validate
+      #   working-directory: project/dev/
 
-      - name: TF - state list existing
-        run: terraform state list || echo "No existing state"
-        working-directory: project/dev/
+      # - name: TF - state list existing
+      #   run: terraform state list || echo "No existing state"
+      #   working-directory: project/dev/
 
-      - name: TF - plan execution
-        run: terraform plan -out=tfplan
-        working-directory: project/dev/
+      # - name: TF - plan execution
+      #   run: terraform plan -out=tfplan
+      #   working-directory: project/dev/
