@@ -1,5 +1,5 @@
 ---
-name: format check
+name: Format repository validation
 
 on:
   pull_request:
