@@ -29,7 +29,6 @@ jobs:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
           workload_identity_provider: ${{ secrets.GCP_WIP }}
           service_account: ${{ secrets.GCP_SA_EMAIL }}
-          # token_format: "access_token"
 
       - name: GCP - setup SDK
         uses: google-github-actions/setup-gcloud@v2
@@ -58,18 +57,18 @@ jobs:
           EOF
         working-directory: project/dev/
 
-      # - name: TF - initialize configuration
-      #   run: terraform init
-      #   working-directory: project/dev/
+      - name: TF - initialize configuration
+        run: terraform init
+        working-directory: project/dev/
 
-      # - name: TF - validate configuration
-      #   run: terraform validate
-      #   working-directory: project/dev/
+      - name: TF - validate configuration
+        run: terraform validate
+        working-directory: project/dev/
 
-      # - name: TF - state list existing
-      #   run: terraform state list || echo "No existing state"
-      #   working-directory: project/dev/
+      - name: TF - state list existing
+        run: terraform state list || echo "No existing state"
+        working-directory: project/dev/
 
-      # - name: TF - plan execution
-      #   run: terraform plan -out=tfplan
-      #   working-directory: project/dev/
+      - name: TF - plan execution
+        run: terraform plan -out=tfplan
+        working-directory: project/dev/
