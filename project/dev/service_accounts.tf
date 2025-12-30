@@ -8,7 +8,8 @@ module "service_accounts" {
       roles = [
         "roles/storage.objectAdmin",
         "roles/iam.workloadIdentityUser",
-        "roles/iam.serviceAccountTokenCreator"
+        "roles/iam.serviceAccountTokenCreator",
+        "roles/viewer"
       ]
       is_workload_identity = true
     }

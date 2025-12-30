@@ -5,4 +5,7 @@ locals {
     project     = "sandbox"
     destination = "github"
   }
+  github_roles = {
+    "roles/iam.workloadIdentityUser" = true
+  }
 }
