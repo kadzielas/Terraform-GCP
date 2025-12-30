@@ -26,15 +26,15 @@ jobs:
       - name: GCP - authenticate
         uses: google-github-actions/auth@v3
         with:
-          project_id: ${{ vars.GCP_PROJECT_ID }} #actionlint=ignore
-          workload_identity_provider: ${{ vars.GCP_WIP }} #actionlint=ignore
-          service_account: ${{ vars.GCP_SA_EMAIL }} #actionlint=ignore
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          workload_identity_provider: ${{ secrets.GCP_WIP }}
+          service_account: ${{ secrets.GCP_SA_EMAIL }}
           # token_format: "access_token"
 
       - name: GCP - setup SDK
         uses: google-github-actions/setup-gcloud@v2
         with:
-          project_id: ${{ vars.GCP_PROJECT_ID }} #actionlint=ignore
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
 
       - name: GCP - access verification
         run: gcloud storage buckets list
