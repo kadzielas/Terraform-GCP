@@ -39,34 +39,26 @@ variable "machine_type" {
   default     = "e2-medium"
 }
 
-variable "boot_image" {
-  description = "The boot image for the compute instance."
-  type        = string
-  default     = "debian-cloud/debian-11"
-}
-
 variable "boot_disk" {
   description = "List of maps of additional disks."
-  type = list(object({
-    auto_delete     = optional(bool, true)
-    boot            = optional(bool, false)
-    device_name     = optional(string)
-    disk_name       = optional(string)
-    disk_size_gb    = optional(number)
-    disk_type       = optional(string)
-    disk_labels     = optional(map(string), {})
-    interface       = optional(string)
-    mode            = optional(string)
-    source          = optional(string)
-    source_image    = optional(string)
-    source_snapshot = optional(string)
+  type = map(object({
+    auto_delete = optional(bool)
+    device_name = optional(string)
+    interface   = optional(string)
+    mode        = optional(string)
+    source      = optional(string)
+    initialize_params = list(object({
+      image  = optional(string)
+      size   = optional(number)
+      type   = optional(string)
+      labels = optional(map(string))
+    }))
   }))
   default = []
 }
-variable "network" {
+variable "network_interface" {
   description = "Additional network interface details for GCE, if any."
-  default     = []
-  type = list(object({
+  type = map(object({
     network            = string
     subnetwork         = string
     subnetwork_project = string
@@ -86,6 +78,8 @@ variable "network" {
       subnetwork_range_name = string
     }))
   }))
+  default = []
+
 }
 
 variable "service_account_email" {

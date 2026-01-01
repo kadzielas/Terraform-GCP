@@ -13,7 +13,16 @@ module "service_accounts" {
       ]
       is_workload_identity = true
     }
+    "${local.prefix}sa-compute" = {
+      display_name = "Service Account for Compute Instances"
+      roles = [
+        "roles/iam.serviceAccountUser",
+        "roles/logging.logWriter",
+        "roles/monitoring.metricWriter",
+        "roles/storage.objectViewer"
+      ]
+      is_workload_identity = false
+    }
   }
-
   depends_on = [module.project]
 }
