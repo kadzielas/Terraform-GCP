@@ -2,7 +2,7 @@ resource "google_compute_firewall" "default" {
   for_each = var.rules
 
   name    = var.rule_name
-  network = google_compute_network.default.name
+  network = google_compute_network.main.name
 
   direction               = each.value.direction
   disabled                = each.value.disabled
@@ -29,5 +29,5 @@ resource "google_compute_firewall" "default" {
       ports    = lookup(deny.value, "ports", null)
     }
   }
-
+  depends_on = [google_compute_network.main]
 }

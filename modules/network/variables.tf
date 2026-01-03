@@ -75,7 +75,7 @@ variable "rule_name" {
 variable "rules" {
   description = "This is DEPRECATED and available for backward compatibility. Use ingress_rules and egress_rules variables. List of custom rule definitions"
   type = list(object({
-    name                    = string
+    name                    = optional(string)
     direction               = optional(string)
     disabled                = optional(bool)
     priority                = optional(number)
