@@ -1,13 +1,4 @@
 locals {
-  role_to_members = {
-    for role in distinct(flatten([
-      for name, account in var.accounts : account.project_roles
-      ])) : role => [
-      for name, account in var.accounts : "serviceAccount:${google_service_account.sa[name].email}"
-      if contains(account.project_roles, role)
-    ]
-  }
-
   sa_bindings = {
     for item in flatten([
       for name, account in var.accounts : [
