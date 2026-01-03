@@ -67,32 +67,20 @@ variable "secondary_ranges" {
 # Firewall Variables
 ####################################
 
-variable "rule_name" {
-  description = "The name of the firewall rule"
-  type        = string
-}
-
 variable "rules" {
   description = "This is DEPRECATED and available for backward compatibility. Use ingress_rules and egress_rules variables. List of custom rule definitions"
   type = list(object({
-    name                    = optional(string)
-    direction               = optional(string)
-    disabled                = optional(bool)
-    priority                = optional(number)
+    name                    = string
+    direction               = optional(string, "INGRESS")
+    disabled                = optional(bool, null)
+    priority                = optional(number, null)
     ranges                  = optional(list(string))
     source_tags             = optional(list(string))
     source_service_accounts = optional(list(string))
     target_tags             = optional(list(string))
     target_service_accounts = optional(list(string))
-
-    allow = optional(list(object({
-      protocol = string
-      ports    = optional(list(string))
-    })), [])
-    deny = optional(list(object({
-      protocol = string
-      ports    = optional(list(string))
-    })), [])
+    protocols               = optional(string)
+    ports                   = optional(list(string))
   }))
   default = []
 
