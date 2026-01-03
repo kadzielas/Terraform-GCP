@@ -8,6 +8,7 @@ locals {
   wi_members = [
     "principalSet://iam.googleapis.com/projects/492774125441/locations/global/workloadIdentityPools/dev-alc25-wip/attribute.repository/kadzielas/Terraform-GCP"
   ]
+
   service_accounts_roles = flatten([
     for name, roles in module.sa.accounts_project_roles : [
       for role in roles : {
