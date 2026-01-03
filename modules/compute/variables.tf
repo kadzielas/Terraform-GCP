@@ -39,47 +39,45 @@ variable "machine_type" {
   default     = "e2-medium"
 }
 
-variable "boot_disk" {
+variable "auto_delete" {
+  description = "Whether the boot disk should be auto-deleted."
+  type        = bool
+  default     = true
+}
+
+variable "interface" {
+  description = "The interface type for the boot disk."
+  type        = string
+  default     = "SCSI"
+}
+
+variable "mode" {
+  description = "The mode for the boot disk."
+  type        = string
+  default     = "READ_WRITE"
+}
+
+variable "initialize_params" {
   description = "List of maps of additional disks."
   type = object({
-    auto_delete = optional(bool)
-    device_name = optional(string)
-    interface   = optional(string)
-    mode        = optional(string)
-    source      = optional(string)
-    initialize_params = optional(object({
-      image  = optional(string)
-      size   = optional(number)
-      type   = optional(string)
-      labels = optional(map(string))
-    }))
+    image  = optional(string)
+    size   = optional(number)
+    type   = optional(string)
+    labels = optional(map(string))
   })
   default = {}
 }
-variable "network_interface" {
-  description = "Additional network interface details for GCE, if any."
-  type = map(object({
-    network            = optional(string)
-    subnetwork         = optional(string)
-    subnetwork_project = optional(string)
-    network_ip         = optional(string)
-    nic_type           = optional(string)
-    stack_type         = optional(string)
-    queue_count        = optional(number)
-    access_config = optional(object({
-      nat_ip       = optional(string)
-      network_tier = optional(string)
-    }))
-    ipv6_access_config = optional(object({
-      network_tier = optional(string)
-    }))
-    alias_ip_range = optional(object({
-      ip_cidr_range         = optional(string)
-      subnetwork_range_name = optional(string)
-    }))
-  }))
-  default = {}
 
+variable "network" {
+  description = "The network to attach the instance to."
+  type        = string
+  default     = ""
+}
+
+variable "subnet" {
+  description = "The subnet to attach the instance to."
+  type        = string
+  default     = ""
 }
 
 variable "service_account_email" {

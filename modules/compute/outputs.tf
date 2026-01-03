@@ -1,5 +1,5 @@
 output "id" {
-  description = "Unique self-link of instance template."
+  description = "Unique self-link of instance."
   value       = google_compute_instance.default.id
 }
 

@@ -11,12 +11,14 @@ module "network" {
   # subnets
   subnets = [
     {
+      key                   = "warsaw"
       subnet_name           = "${local.prefix}subnet-warsaw"
       subnet_ip             = "10.0.0.0/27"
       subnet_region         = "europe-central2"
       subnet_private_access = "true"
     },
     {
+      key                   = "frankfurt"
       subnet_name           = "${local.prefix}subnet-frankfurt"
       subnet_ip             = "20.0.0.0/27"
       subnet_region         = "europe-west3"
@@ -24,7 +26,8 @@ module "network" {
 
     },
     {
-      subnet_name           = "${local.prefix}subnet-us"
+      key                   = "oregon"
+      subnet_name           = "${local.prefix}subnet-oregon"
       subnet_ip             = "30.0.0.0/27"
       subnet_region         = "us-west1"
       subnet_private_access = "true"
@@ -43,4 +46,6 @@ module "network" {
       source_ranges = ["0.0.0.0/0"]
     }
   ]
+
+  depends_on = [module.project]
 }

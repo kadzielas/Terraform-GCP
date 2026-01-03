@@ -42,6 +42,7 @@ variable "routing_mode" {
 variable "subnets" {
   description = "The list of subnets being created"
   type = list(object({
+    key                   = string
     subnet_name           = string
     subnet_ip             = string
     subnet_region         = string

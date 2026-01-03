@@ -9,8 +9,18 @@ output "network_id" {
 }
 
 output "subnets" {
-  value       = google_compute_subnetwork.subnet
-  description = "The created subnet resources"
+  value = {
+    for k, s in google_compute_subnetwork.subnet : k => {
+      id        = s.id
+      self_link = s.self_link
+      name      = s.name
+      region    = s.region
+    }
+  }
+}
+
+output "subnet_ids" {
+  value = { for k, s in google_compute_subnetwork.subnet : k => s.id }
 }
 
 output "firewall_rules" {
