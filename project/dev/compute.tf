@@ -14,8 +14,8 @@ module "vm" {
   mode        = "READ_WRITE"
 
   initialize_params = {
-    image  = "rhel-10-v202512091"
-    size   = 20
+    image  = "centos-stream-10-arm64-v20251111"
+    size   = 50
     type   = "pd-ssd"
     labels = local.labels
   }
