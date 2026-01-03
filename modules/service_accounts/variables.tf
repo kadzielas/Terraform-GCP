@@ -6,10 +6,12 @@ variable "project_id" {
 variable "accounts" {
   description = "Map of service accounts to create."
   type = map(object({
-    account_id           = optional(string)
-    display_name         = optional(string)
-    roles                = optional(list(string))
-    is_workload_identity = optional(bool)
+    display_name  = string
+    project_roles = optional(list(string), [])
+    iam_bindings = optional(list(object({
+      role    = string
+      members = list(string)
+    })), [])
   }))
   default = {}
 }

@@ -1,6 +1,6 @@
 module "sa" {
-  source     = "../../modules/service_account"
-  project_id = var.gcp_project_id
+  source     = "../../modules/service_accounts"
+  project_id = var.project_id
 
   accounts = {
     "${local.prefix}sa-github" = {
@@ -10,7 +10,12 @@ module "sa" {
         "roles/iam.workloadIdentityUser",
       ]
       iam_bindings = [
-        "roles/iam.serviceAccountTokenCreator"
+        { role = "roles/iam.serviceAccountTokenCreator"
+          members = [
+            "serviceAccount:my-gcp-project.svc.id.goog[github-actions/imp]"
+          ]
+        }
+
       ]
     },
 

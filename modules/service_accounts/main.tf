@@ -3,7 +3,7 @@ resource "google_service_account" "sa" {
 
   project      = var.project_id
   account_id   = each.key
-  display_name = try(each.value.display_name, each.key)
+  display_name = each.value.display_name
 }
 
 resource "google_service_account_iam_binding" "sa_iam" {
