@@ -7,13 +7,15 @@ module "sa" {
       display_name = "dev-sa-imp"
       project_roles = [
         "roles/storage.objectAdmin",
-        "roles/iam.workloadIdentityUser",
+        "roles/viewer"
       ]
       iam_bindings = [
-        { role = "roles/iam.serviceAccountTokenCreator"
-          members = [
-            "serviceAccount:my-gcp-project.svc.id.goog[github-actions/imp]"
-          ]
+        { role    = "roles/iam.serviceAccountTokenCreator"
+          members = local.wi_members
+        },
+        {
+          role    = "roles/iam.workloadIdentityUser"
+          members = local.wi_members
         }
 
       ]
