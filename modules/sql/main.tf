@@ -1,5 +1,6 @@
 resource "google_sql_database_instance" "main" {
-  project             = var.project_id
+  project = var.project_id
+
   region              = var.region
   name                = var.name
   database_version    = var.database_version
