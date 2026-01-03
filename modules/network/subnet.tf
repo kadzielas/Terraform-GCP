@@ -11,8 +11,8 @@ resource "google_compute_subnetwork" "subnet" {
     for_each = contains(keys(var.secondary_ranges), each.value.subnet_name) == true ? var.secondary_ranges[each.value.subnet_name] : []
 
     content {
-      range_name    = secondary_ip_range.value.range_name
-      ip_cidr_range = secondary_ip_range.value.ip_cidr_range
+      range_name    = lookup(secondary_ip_range.value, "range_name", null)
+      ip_cidr_range = lookup(secondary_ip_range.value, "ip_cidr_range", null)
     }
   }
 

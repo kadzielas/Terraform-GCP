@@ -1,9 +1,9 @@
-output "self_link_unique" {
+output "id" {
   description = "Unique self-link of instance template."
-  value       = google_compute_instance_template.tpl.self_link_unique
+  value       = google_compute_instance.default.id
 }
 
 output "self_link" {
-  description = "Self-link of instance template."
-  value       = google_compute_instance_template.tpl.self_link
+  description = "Self-link of instance."
+  value       = google_compute_instance.default.self_link
 }

@@ -18,7 +18,7 @@ variable "zone" {
 variable "tags" {
   description = "Resource labels for filtering and billing."
   type        = set(string)
-  default     = {}
+  default     = []
 }
 
 variable "encryption_key_name" {
@@ -41,44 +41,44 @@ variable "machine_type" {
 
 variable "boot_disk" {
   description = "List of maps of additional disks."
-  type = map(object({
+  type = object({
     auto_delete = optional(bool)
     device_name = optional(string)
     interface   = optional(string)
     mode        = optional(string)
     source      = optional(string)
-    initialize_params = list(object({
+    initialize_params = optional(object({
       image  = optional(string)
       size   = optional(number)
       type   = optional(string)
       labels = optional(map(string))
     }))
-  }))
-  default = []
+  })
+  default = {}
 }
 variable "network_interface" {
   description = "Additional network interface details for GCE, if any."
   type = map(object({
-    network            = string
-    subnetwork         = string
-    subnetwork_project = string
-    network_ip         = string
-    nic_type           = string
-    stack_type         = string
-    queue_count        = number
-    access_config = list(object({
-      nat_ip       = string
-      network_tier = string
+    network            = optional(string)
+    subnetwork         = optional(string)
+    subnetwork_project = optional(string)
+    network_ip         = optional(string)
+    nic_type           = optional(string)
+    stack_type         = optional(string)
+    queue_count        = optional(number)
+    access_config = optional(object({
+      nat_ip       = optional(string)
+      network_tier = optional(string)
     }))
-    ipv6_access_config = list(object({
-      network_tier = string
+    ipv6_access_config = optional(object({
+      network_tier = optional(string)
     }))
-    alias_ip_range = list(object({
-      ip_cidr_range         = string
-      subnetwork_range_name = string
+    alias_ip_range = optional(object({
+      ip_cidr_range         = optional(string)
+      subnetwork_range_name = optional(string)
     }))
   }))
-  default = []
+  default = {}
 
 }
 

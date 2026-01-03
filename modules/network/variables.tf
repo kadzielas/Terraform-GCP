@@ -7,12 +7,6 @@ variable "project_id" {
   type        = string
 }
 
-variable "name" {
-  description = "Unique name for the SQL instance."
-  type        = string
-  default     = ""
-}
-
 variable "region" {
   description = "GCP region for resource deployment."
   type        = string
