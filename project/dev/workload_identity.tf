@@ -22,18 +22,3 @@ module "workload_identity_pools" {
   }
   depends_on = [module.service_accounts]
 }
-
-resource "google_service_account_iam_binding" "wif_binding" {
-  for_each = local.github_roles
-
-  service_account_id = module.service_accounts.service_accounts["${local.prefix}sa-github"].name
-  role               = each.key
-
-  members = [
-    "principal://iam.googleapis.com/projects/492774125441/locations/global/workloadIdentityPools/dev-alc25-wip/subject/google.subject",
-    "principalSet://iam.googleapis.com/projects/492774125441/locations/global/workloadIdentityPools/dev-alc25-wip/attribute.repository/kadzielas/Terraform-GCP"
-  ]
-
-  depends_on = [module.workload_identity_pools]
-
-}

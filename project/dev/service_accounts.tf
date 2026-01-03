@@ -1,28 +1,28 @@
-module "service_accounts" {
-  source     = "../../modules/service_accounts"
-  project_id = var.project_id
+module "sa" {
+  source     = "../../modules/service_account"
+  project_id = var.gcp_project_id
 
   accounts = {
     "${local.prefix}sa-github" = {
-      display_name = "Service Account for GitHub Actions"
-      roles = [
+      display_name = "dev-sa-imp"
+      project_roles = [
         "roles/storage.objectAdmin",
         "roles/iam.workloadIdentityUser",
-        "roles/iam.serviceAccountTokenCreator",
-        "roles/viewer"
       ]
-      is_workload_identity = true
-    }
+      iam_bindings = [
+        "roles/iam.serviceAccountTokenCreator"
+      ]
+    },
+
     "${local.prefix}sa-compute" = {
-      display_name = "Service Account for Compute Instances"
-      roles = [
+      display_name = "dev-sa-imp"
+      project_roles = [
+        "roles/compute.admin",
         "roles/iam.serviceAccountUser",
-        "roles/logging.logWriter",
-        "roles/monitoring.metricWriter",
-        "roles/storage.objectViewer"
       ]
-      is_workload_identity = false
+      iam_bindings = []
     }
+
   }
   depends_on = [module.project]
 }
