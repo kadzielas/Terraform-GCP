@@ -1,7 +1,7 @@
 resource "google_compute_subnetwork" "subnet" {
   for_each = local.subnets
 
-  network                  = google_compute_network.vpc.name
+  network                  = google_compute_network.vpc.id
   region                   = each.value.subnet_region
   name                     = each.value.subnet_name
   ip_cidr_range            = each.value.subnet_ip
@@ -15,6 +15,4 @@ resource "google_compute_subnetwork" "subnet" {
       ip_cidr_range = lookup(secondary_ip_range.value, "ip_cidr_range", null)
     }
   }
-
-  depends_on = [google_compute_network.vpc]
 }

@@ -6,8 +6,6 @@ resource "google_compute_global_address" "psc" {
   purpose      = "PRIVATE_SERVICE_CONNECT"
   network      = google_compute_network.vpc.id
   address      = var.private_service_connect_ip
-
-  depends_on = [google_compute_network.vpc]
 }
 
 resource "google_compute_global_forwarding_rule" "fr_psc" {
@@ -17,6 +15,4 @@ resource "google_compute_global_forwarding_rule" "fr_psc" {
   network               = google_compute_network.vpc.id
   ip_address            = google_compute_global_address.psc.id
   load_balancing_scheme = ""
-
-  depends_on = [google_compute_global_address.psc]
 }

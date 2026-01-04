@@ -7,9 +7,16 @@ module "vm" {
   name         = "${local.prefix}vm-main"
   machine_type = "n2-standard-4"
 
-  network = module.network.network_id
-  subnet  = module.network.subnets["warsaw"].id
 
+  network_interface = {
+    network                     = module.network.network_id
+    subnet                      = module.network.subnets["warsaw"].id
+    subnetwork_project          = var.project_id
+    associated_ip               = "10.0.0.5"
+    queue_count                 = 0
+    stack_type                  = "IPV4_ONLY"
+    internal_ipv6_prefix_length = 0
+  }
 
   auto_delete = true
   mode        = "READ_WRITE"

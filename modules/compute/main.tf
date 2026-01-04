@@ -13,13 +13,17 @@ resource "google_compute_instance" "default" {
     kms_key_service_account = "dev-alc25-sa-compute@daring-chess-474306-h4.iam.gserviceaccount.com"
   }
 
-  network_interface {
-    network                     = var.network
-    subnetwork                  = var.subnet
-    subnetwork_project          = var.project_id
-    queue_count                 = 0
-    stack_type                  = "IPV4_ONLY"
-    internal_ipv6_prefix_length = 0
+  dynamic "network_interface" {
+    for_each = var.network_interface != null ? [0] : []
+    content {
+      network                     = var.network_interface.network
+      subnetwork                  = var.network_interface.subnet
+      subnetwork_project          = var.network_interface.subnetwork_project
+      network_ip                  = var.network_interface.associated_ip
+      queue_count                 = var.network_interface.queue_count
+      stack_type                  = var.network_interface.stack_type
+      internal_ipv6_prefix_length = var.network_interface.internal_ipv6_prefix_length
+    }
   }
 
   boot_disk {
@@ -66,6 +70,13 @@ resource "google_compute_instance" "default" {
   service_account {
     email  = var.service_account_email
     scopes = var.service_account_scopes
+  }
+
+  lifecycle {
+    ignore_changes = [
+      metadata["ssh-keys"],
+      instance_encryption_key["kms_key_self_link"],
+    ]
   }
 }
 
