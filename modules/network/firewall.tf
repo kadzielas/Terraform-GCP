@@ -2,7 +2,7 @@ resource "google_compute_firewall" "default_allow" {
   for_each = length(var.rules) > 0 ? { for r in var.rules : r.name => r } : {}
 
   name    = each.value.name
-  network = google_compute_network.main.name
+  network = google_compute_network.vpc.name
 
   direction               = each.value.direction
   disabled                = each.value.disabled
@@ -18,6 +18,6 @@ resource "google_compute_firewall" "default_allow" {
     protocol = each.value.protocol
     ports    = each.value.ports
   }
-  depends_on = [google_compute_network.main]
+  depends_on = [google_compute_network.vpc]
 }
 

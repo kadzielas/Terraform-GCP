@@ -56,7 +56,7 @@ resource "google_compute_instance" "default" {
   shielded_instance_config {
     enable_integrity_monitoring = true
     enable_secure_boot          = false
-    enable_vtpm                 = false
+    enable_vtpm                 = true
   }
 
   tags = var.tags
