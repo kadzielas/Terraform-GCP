@@ -9,6 +9,7 @@ module "project" {
   services = [
     "compute.googleapis.com",
     "iam.googleapis.com",
+    "iap.googleapis.com",
     "iamcredentials.googleapis.com",
     "serviceusage.googleapis.com",
     "storage-component.googleapis.com",
