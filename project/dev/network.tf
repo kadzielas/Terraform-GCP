@@ -37,19 +37,19 @@ module "network" {
   private_service_connect_ip   = "10.0.0.255"
   forwarding_rule_target       = "all-apis"
 
-  # firewall
-  # rules = [
-  #   {
-  #     name          = "${local.prefix}-allow-ingress"
-  #     direction     = "INGRESS"
-  #     priority      = 100
-  #     action        = "ALLOW"
-  #     protocol      = "tcp"
-  #     ports         = ["22"]
-  #     source_ranges = ["35.235.240.0/20", "34.6.156.0/24", "10.0.0.0/27"]
-  #     target_tags   = ["dev"]
-  #   }
-  # ]
+  #firewall
+  rules = [
+    {
+      name          = "${local.prefix}-allow-ingress"
+      direction     = "INGRESS"
+      priority      = 1
+      action        = "ALLOW"
+      protocol      = "tcp"
+      ports         = ["22"]
+      source_ranges = ["35.235.240.0/20", "34.6.156.0/24", "10.0.0.0/27"]
+      target_tags   = ["dev"]
+    }
+  ]
 
   depends_on = [module.project]
 }
