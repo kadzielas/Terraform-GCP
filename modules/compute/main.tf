@@ -23,6 +23,12 @@ resource "google_compute_instance" "default" {
       queue_count                 = var.network_interface.queue_count
       stack_type                  = var.network_interface.stack_type
       internal_ipv6_prefix_length = var.network_interface.internal_ipv6_prefix_length
+      dynamic "access_config" {
+        for_each = try(network_interface.value.access_config, [])
+        content {
+          nat_ip = try(access_config.value.nat_ip, null)
+        }
+      }
     }
   }
 
