@@ -74,7 +74,7 @@ variable "rules" {
     source_service_accounts = optional(list(string))
     target_tags             = optional(list(string))
     target_service_accounts = optional(list(string))
-    protocols               = optional(string)
+    protocol                = optional(string)
     ports                   = optional(list(string))
   }))
   default = []

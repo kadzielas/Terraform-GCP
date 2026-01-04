@@ -5,20 +5,26 @@ module "vm" {
   zone       = "${var.region}-a"
 
   name         = "${local.prefix}vm-main"
-  machine_type = "e2-standard-4"
+  machine_type = "n2-standard-4"
 
   network = module.network.network_id
   subnet  = module.network.subnets["warsaw"].id
+
 
   auto_delete = true
   mode        = "READ_WRITE"
 
   initialize_params = {
-    image  = "centos-stream-10-arm64-v20251111"
-    size   = 50
-    type   = "pd-ssd"
-    labels = local.labels
+    auto_delete = true
+    device_name = "${local.prefix}vm-disk-main"
+    interface   = "SCSI"
+    image       = "https://www.googleapis.com/compute/v1/projects/centos-cloud/global/images/centos-stream-10-arm64-v20251111"
+    size        = 50
+    type        = "pd-ssd"
+    labels      = local.labels
   }
+
+  tags = ["dev"]
 
   service_account_email  = module.sa.service_account_emails["${local.prefix}sa-compute"]
   service_account_scopes = ["https://www.googleapis.com/auth/cloud-platform"]

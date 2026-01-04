@@ -3,32 +3,61 @@ resource "google_compute_instance" "default" {
   machine_type = var.machine_type
   zone         = var.zone
 
+  enable_display = false
+  labels         = var.labels
+
+  resource_policies = []
+
   instance_encryption_key {
     kms_key_self_link       = var.encryption_key_name
-    kms_key_service_account = var.service_account_email
+    kms_key_service_account = "dev-alc25-sa-compute@daring-chess-474306-h4.iam.gserviceaccount.com"
   }
 
   network_interface {
-    network    = var.network
-    subnetwork = var.subnet
+    network                     = var.network
+    subnetwork                  = var.subnet
+    subnetwork_project          = var.project_id
+    queue_count                 = 0
+    stack_type                  = "IPV4_ONLY"
+    internal_ipv6_prefix_length = 0
   }
 
   boot_disk {
-    auto_delete = var.auto_delete
-    interface   = var.interface
-    mode        = var.mode
+    auto_delete  = var.auto_delete
+    interface    = var.interface
+    mode         = var.mode
+    force_attach = false
+    guest_os_features = [
+      "UEFI_COMPATIBLE",
+      "GVNIC",
+      "IDPF",
+    ]
 
     initialize_params {
-      image  = var.initialize_params.image
-      size   = var.initialize_params.size
-      type   = var.initialize_params.type
-      labels = var.initialize_params.labels
+      architecture                = "ARM64"
+      enable_confidential_compute = false
+      image                       = var.initialize_params.image
+      size                        = var.initialize_params.size
+      type                        = var.initialize_params.type
+      labels                      = var.initialize_params.labels
+      resource_manager_tags       = {}
     }
   }
 
-  # scratch_disk {
-  #   interface = "NVME"
-  # }
+  scheduling {
+    automatic_restart   = true
+    availability_domain = 0
+    min_node_cpus       = 0
+    on_host_maintenance = "MIGRATE"
+    preemptible         = false
+    provisioning_model  = "STANDARD"
+  }
+
+  shielded_instance_config {
+    enable_integrity_monitoring = true
+    enable_secure_boot          = false
+    enable_vtpm                 = false
+  }
 
   tags = var.tags
 
