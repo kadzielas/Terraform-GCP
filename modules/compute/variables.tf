@@ -80,16 +80,17 @@ variable "initialize_params" {
   default = {}
 }
 
-variable "network" {
-  description = "The network to attach the instance to."
-  type        = string
-  default     = ""
-}
-
-variable "subnet" {
-  description = "The subnet to attach the instance to."
-  type        = string
-  default     = ""
+variable "network_interface" {
+  description = ""
+  type = object({
+    network                     = string
+    subnet                      = string
+    subnetwork_project          = optional(string)
+    associated_ip               = optional(string)
+    queue_count                 = optional(number)
+    stack_type                  = optional(string)
+    internal_ipv6_prefix_length = optional(number)
+  })
 }
 
 variable "service_account_email" {

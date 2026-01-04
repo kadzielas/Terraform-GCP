@@ -18,6 +18,5 @@ resource "google_compute_firewall" "default_allow" {
     protocol = each.value.protocol
     ports    = each.value.ports
   }
-  depends_on = [google_compute_network.vpc]
 }
 
