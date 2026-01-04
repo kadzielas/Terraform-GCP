@@ -126,6 +126,7 @@ variable "rules" {
     priority                = optional(number, null)
     ranges                  = optional(list(string))
     source_tags             = optional(list(string))
+    source_ranges           = optional(set(string))
     source_service_accounts = optional(list(string))
     target_tags             = optional(list(string))
     target_service_accounts = optional(list(string))

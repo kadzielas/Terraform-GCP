@@ -8,6 +8,7 @@ module "vm" {
 
   project_id = var.project_id
   zone       = "${var.region}-a"
+  labels     = local.labels
 
   kms_sa_email        = module.sa.service_account_emails["${local.prefix}sa-compute"]
   encryption_key_name = module.encryption.cmek_name
@@ -30,6 +31,7 @@ module "vm" {
       }
     ]
   }
+  tags = ["dev", "europe", "warsaw"]
 
   auto_delete = true
   mode        = "READ_WRITE"
@@ -44,7 +46,6 @@ module "vm" {
     labels      = local.labels
   }
 
-  tags = ["dev", "europe", "warsaw"]
 
 
   service_account_email  = module.sa.service_account_emails["${local.prefix}sa-compute"]
