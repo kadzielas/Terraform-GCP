@@ -1,8 +1,3 @@
-resource "google_compute_address" "static_ip" {
-  name   = "my-vm-static-ip"
-  region = var.region
-}
-
 module "vm" {
   source = "../../modules/compute"
 
@@ -16,7 +11,6 @@ module "vm" {
   name         = "${local.prefix}vm-main"
   machine_type = "n2-standard-4"
 
-
   network_interface = {
     network                     = module.network.network_self_link
     subnet                      = module.network.subnets["warsaw"].self_link
@@ -25,11 +19,6 @@ module "vm" {
     queue_count                 = 0
     stack_type                  = "IPV4_ONLY"
     internal_ipv6_prefix_length = 0
-    access_config = [
-      {
-        nat_ip = google_compute_address.static_ip.address
-      }
-    ]
   }
   tags = ["dev", "europe", "warsaw"]
 
@@ -45,8 +34,6 @@ module "vm" {
     type        = "pd-ssd"
     labels      = local.labels
   }
-
-
 
   service_account_email  = module.sa.service_account_emails["${local.prefix}sa-compute"]
   service_account_scopes = ["https://www.googleapis.com/auth/cloud-platform"]

@@ -34,4 +34,3 @@ output "firewall_rules" {
   value       = google_compute_firewall.default_allow
   description = "The created firewall rule resources"
 }
-
