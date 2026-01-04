@@ -38,7 +38,7 @@ resource "google_compute_instance" "default" {
     ]
 
     initialize_params {
-      architecture                = "ARM64"
+      architecture                = "X86_64"
       enable_confidential_compute = false
       image                       = var.initialize_params.image
       size                        = var.initialize_params.size

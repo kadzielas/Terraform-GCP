@@ -90,6 +90,9 @@ variable "network_interface" {
     queue_count                 = optional(number)
     stack_type                  = optional(string)
     internal_ipv6_prefix_length = optional(number)
+    access_config = optional(list(object({
+      nat_ip = optional(string)
+    })))
   })
 }
 

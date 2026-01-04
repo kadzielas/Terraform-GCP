@@ -25,7 +25,7 @@ module "vm" {
     auto_delete = true
     device_name = "${local.prefix}vm-disk-main"
     interface   = "SCSI"
-    image       = "https://www.googleapis.com/compute/v1/projects/centos-cloud/global/images/centos-stream-10-arm64-v20251111"
+    image       = "https://www.googleapis.com/compute/v1/projects/centos-cloud/global/images/centos-stream-10-v20251111 "
     size        = 50
     type        = "pd-ssd"
     labels      = local.labels
