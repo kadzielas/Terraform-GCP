@@ -1,3 +1,8 @@
+resource "google_compute_address" "static_ip" {
+  name   = "my-vm-static-ip"
+  region = var.region
+}
+
 module "vm" {
   source = "../../modules/compute"
 
@@ -16,6 +21,11 @@ module "vm" {
     queue_count                 = 0
     stack_type                  = "IPV4_ONLY"
     internal_ipv6_prefix_length = 0
+    access_config = [
+      {
+        nat_ip = google_compute_address.static_ip.address
+      }
+    ]
   }
 
   auto_delete = true
