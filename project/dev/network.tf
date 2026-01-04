@@ -40,7 +40,7 @@ module "network" {
   #firewall
   rules = [
     {
-      name          = "${local.prefix}-allow-ingress"
+      name          = "${local.prefix}allow-ingress"
       direction     = "INGRESS"
       priority      = 100
       action        = "ALLOW"

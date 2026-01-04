@@ -10,6 +10,6 @@ output "cmek" {
   value = google_kms_crypto_key.cmek
 }
 
-output "cmek_id" {
-  value = google_kms_crypto_key.cmek.id
+output "cmek_name" {
+  value = google_kms_crypto_key.cmek.name
 }
