@@ -6,7 +6,7 @@ module "network" {
 
   # vpc
   vpc_name     = "${local.prefix}vpc"
-  routing_mode = "GLOBAL"
+  routing_mode = "REGIONAL"
 
   # subnets
   subnets = [
@@ -40,13 +40,21 @@ module "network" {
   #firewall
   rules = [
     {
-      name          = "${local.prefix}allow-ingress"
+      name          = "${local.prefix}allow-tcp-ingress"
       direction     = "INGRESS"
       priority      = 100
       action        = "ALLOW"
       protocol      = "tcp"
-      ports         = ["22"]
+      ports         = ["22", "80", "443"]
       source_ranges = ["35.235.240.0/20"]
+    },
+    {
+      name        = "${local.prefix}allow-icmp-ingress"
+      direction   = "INGRESS"
+      priority    = 100
+      action      = "ALLOW"
+      protocol    = "icmp"
+      source_tags = ["dev"]
     }
   ]
 
