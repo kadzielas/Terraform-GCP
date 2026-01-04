@@ -6,9 +6,9 @@ resource "google_compute_firewall" "default_allow" {
 
   direction               = each.value.direction
   disabled                = each.value.disabled
-  source_ranges           = each.value.direction == "INGRESS" ? each.value.ranges : null
+  source_ranges           = each.value.source_ranges
   destination_ranges      = each.value.direction == "EGRESS" ? each.value.ranges : null
-  source_tags             = ["dev"] #each.value.source_tags
+  source_tags             = each.value.source_tags
   source_service_accounts = each.value.source_service_accounts
   target_tags             = each.value.target_tags
   target_service_accounts = each.value.target_service_accounts
