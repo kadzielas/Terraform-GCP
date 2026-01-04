@@ -4,6 +4,12 @@ variable "project_id" {
   default     = "daring-chess-474306-h4"
 }
 
+variable "location" {
+  description = "GCP location"
+  type        = string
+  default     = "EU"
+}
+
 variable "region" {
   description = "GCP region"
   type        = string

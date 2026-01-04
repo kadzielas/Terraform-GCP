@@ -18,13 +18,13 @@ variable "zone" {
 variable "labels" {
   description = "Resource labels for filtering and billing."
   type        = map(string)
-  default     = {}
+  default     = null
 }
 
 variable "tags" {
   description = "Resource tags for filtering and billing."
   type        = set(string)
-  default     = []
+  default     = null
 }
 
 variable "encryption_key_name" {

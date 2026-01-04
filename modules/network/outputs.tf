@@ -8,15 +8,12 @@ output "network_id" {
   description = "The ID of the VPC being created"
 }
 
+output "network_self_link" {
+  value = google_compute_network.vpc.self_link
+}
+
 output "subnets" {
-  value = {
-    for k, s in google_compute_subnetwork.subnet : k => {
-      id        = s.id
-      self_link = s.self_link
-      name      = s.name
-      region    = s.region
-    }
-  }
+  value = { for k, s in google_compute_subnetwork.subnet : k => s }
 }
 
 output "subnet_ids" {

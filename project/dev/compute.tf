@@ -9,13 +9,16 @@ module "vm" {
   project_id = var.project_id
   zone       = "${var.region}-a"
 
+  kms_sa_email        = module.sa.service_account_emails["${local.prefix}sa-compute"]
+  encryption_key_name = module.encryption.cmek_name
+
   name         = "${local.prefix}vm-main"
   machine_type = "n2-standard-4"
 
 
   network_interface = {
-    network                     = module.network.network_id
-    subnet                      = module.network.subnets["warsaw"].id
+    network                     = module.network.network_self_link
+    subnet                      = module.network.subnets["warsaw"].self_link
     subnetwork_project          = var.project_id
     associated_ip               = "10.0.0.5"
     queue_count                 = 0
@@ -35,13 +38,14 @@ module "vm" {
     auto_delete = true
     device_name = "${local.prefix}vm-disk-main"
     interface   = "SCSI"
-    image       = "https://www.googleapis.com/compute/v1/projects/centos-cloud/global/images/centos-stream-10-v20251111 "
+    image       = "https://www.googleapis.com/compute/v1/projects/centos-cloud/global/images/centos-stream-10-v20251111"
     size        = 50
     type        = "pd-ssd"
     labels      = local.labels
   }
 
-  tags = ["dev"]
+  tags = ["dev", "europe", "warsaw"]
+
 
   service_account_email  = module.sa.service_account_emails["${local.prefix}sa-compute"]
   service_account_scopes = ["https://www.googleapis.com/auth/cloud-platform"]

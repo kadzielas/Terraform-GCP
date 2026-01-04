@@ -10,7 +10,7 @@ resource "google_compute_instance" "default" {
 
   instance_encryption_key {
     kms_key_self_link       = var.encryption_key_name
-    kms_key_service_account = "dev-alc25-sa-compute@daring-chess-474306-h4.iam.gserviceaccount.com"
+    kms_key_service_account = var.kms_sa_email
   }
 
   dynamic "network_interface" {
@@ -37,11 +37,6 @@ resource "google_compute_instance" "default" {
     interface    = var.interface
     mode         = var.mode
     force_attach = false
-    guest_os_features = [
-      "UEFI_COMPATIBLE",
-      "GVNIC",
-      "IDPF",
-    ]
 
     initialize_params {
       architecture                = "X86_64"
