@@ -12,17 +12,29 @@ variable "name" {
 variable "zone" {
   description = "GCP zone for resource deployment."
   type        = string
-  default     = "europe-central2"
+  default     = "europe-central2-a"
+}
+
+variable "labels" {
+  description = "Resource labels for filtering and billing."
+  type        = map(string)
+  default     = {}
 }
 
 variable "tags" {
-  description = "Resource labels for filtering and billing."
+  description = "Resource tags for filtering and billing."
   type        = set(string)
   default     = []
 }
 
 variable "encryption_key_name" {
   description = "The KMS key name for instance encryption."
+  type        = string
+  default     = ""
+}
+
+variable "kms_sa_email" {
+  description = "The service account email used to access the KMS key."
   type        = string
   default     = ""
 }

@@ -39,11 +39,12 @@ module "network" {
     {
       name          = "default-allow-ingress"
       direction     = "INGRESS"
-      priority      = 1000
+      priority      = 100
       action        = "ALLOW"
-      protocols     = "tcp"
+      protocol      = "tcp"
       ports         = ["22"]
-      source_ranges = ["0.0.0.0/0"]
+      source_ranges = ["35.235.240.0/20"]
+      target_tags   = ["dev"]
     }
   ]
 

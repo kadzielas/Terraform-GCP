@@ -4,10 +4,10 @@ module "sa" {
 
   accounts = {
     "${local.prefix}sa-github" = {
-      display_name = "dev-sa-imp"
+      display_name = "DEV SA for GitHub"
       project_roles = [
+        "roles/viewer",
         "roles/storage.objectAdmin",
-        "roles/viewer"
       ]
       iam_bindings = [
         { role    = "roles/iam.serviceAccountTokenCreator"
@@ -22,10 +22,11 @@ module "sa" {
     },
 
     "${local.prefix}sa-compute" = {
-      display_name = "dev-sa-imp"
+      display_name = "DEV SA for Compute"
       project_roles = [
         "roles/compute.admin",
         "roles/iam.serviceAccountUser",
+        "roles/cloudkms.cryptoKeyEncrypterDecrypter",
       ]
       iam_bindings = []
     }

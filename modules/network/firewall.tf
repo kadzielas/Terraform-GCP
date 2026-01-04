@@ -8,14 +8,14 @@ resource "google_compute_firewall" "default_allow" {
   disabled                = each.value.disabled
   source_ranges           = each.value.direction == "INGRESS" ? each.value.ranges : null
   destination_ranges      = each.value.direction == "EGRESS" ? each.value.ranges : null
-  source_tags             = ["web", "app"] #each.value.source_tags
+  source_tags             = ["dev"] #each.value.source_tags
   source_service_accounts = each.value.source_service_accounts
   target_tags             = each.value.target_tags
   target_service_accounts = each.value.target_service_accounts
   priority                = each.value.priority
 
   allow {
-    protocol = each.value.protocols
+    protocol = each.value.protocol
     ports    = each.value.ports
   }
   depends_on = [google_compute_network.main]
