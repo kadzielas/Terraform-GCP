@@ -1,4 +1,4 @@
-# Terraform-GCP — GCP Sandbox
+# Terraform-GCP — Sandbox deployment
 
 Repo to recreate GCP infrastructure and improve Terraform skills — with a practical focus on spinning up **sandbox environments quickly** (new projects / “sandboxes” with a repeatable set of resources). :contentReference[oaicite:0]{index=0}
 
@@ -55,26 +55,24 @@ Top-level structure:
 
 ``` Cloud Shell
 gcloud auth application-default login
-gcloud config set project <YOUR_GCP_PROJECT_ID>
+gcloud config set project <PROJECT_ID>
 ```
 
 ### Deploy infrastructure
 
-```IDE
+
 Comment whole backend.tf file because bucket for state does not exist for now.
-```
 
 ``` IDE terminal
-cd project/<env>
+cd project/<ENV>
 
-terraform init -var-file="../config/<env>.tfvars"
-terraform apply -var-file="../config/<env>.tfvars"
+terraform init -var-file="../config/<ENV>.tfvars"
+terraform apply -var-file="../config/<ENV>.tfvars"
 ```
 
-```IDE
 Uncomment backend.tf and provide correct values to bucket.
 Do apply once again.
-```
+
 
 ### Destroy infrastructure
 
