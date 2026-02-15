@@ -11,13 +11,6 @@ Repo to recreate GCP infrastructure and improve Terraform skills — with a prac
 - [Prerequisites](#prerequisites)
 - [Authentication](#authentication)
 - [Quick start](#quick-start)
-- [Configuration](#configuration)
-- [Typical workflows](#typical-workflows)
-- [Modules](#modules)
-- [CI/CD (GitHub Actions)](#cicd-github-actions)
-- [Troubleshooting](#troubleshooting)
-- [Contributing](#contributing)
-- [License](#license)
 
 ---
 
