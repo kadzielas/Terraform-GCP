@@ -9,7 +9,19 @@ resource "google_service_account" "sa" {
 resource "google_service_account_iam_binding" "sa_iam" {
   for_each = local.sa_bindings
 
-  service_account_id = google_service_account.sa[each.value.account_name].name
+  service_account_id = "projects/${var.project_id}/serviceAccounts/${each.value.account_name}@${var.project_id}.iam.gserviceaccount.com"
   role               = each.value.role
   members            = each.value.members
+
+  depends_on = [google_service_account.sa]
+}
+
+resource "google_project_iam_binding" "roles" {
+  for_each = local.role_to_members
+
+  project = var.project_id
+  role    = each.key
+  members = each.value
+
+  depends_on = [google_service_account.sa]
 }

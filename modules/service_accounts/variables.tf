@@ -6,9 +6,9 @@ variable "project_id" {
 variable "accounts" {
   description = "Map of service accounts to create."
   type = map(object({
-    display_name  = string
-    project_roles = optional(list(string), [])
-    iam_bindings = optional(list(object({
+    display_name = string
+    roles        = optional(list(string), [])
+    sa_bindings = optional(list(object({
       role    = string
       members = list(string)
     })), [])

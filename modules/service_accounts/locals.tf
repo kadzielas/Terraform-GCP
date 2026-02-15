@@ -11,4 +11,12 @@ locals {
       ]
     ]) : item.key => item
   }
+  role_to_members = {
+    for role in distinct(flatten([
+      for sa in var.accounts : sa.roles
+      ])) : role => [
+      for key, sa in var.accounts : "serviceAccount:${google_service_account.sa[key].email}"
+      if contains(sa.roles, role)
+    ]
+  }
 }

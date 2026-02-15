@@ -1,5 +1,5 @@
 resource "google_project_iam_binding" "project" {
-  for_each = local.all_project_iam
+  for_each = local.project_iam_bindings
 
   project = var.project_id
   role    = each.key

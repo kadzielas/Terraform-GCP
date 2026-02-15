@@ -15,3 +15,9 @@ variable "region" {
   type        = string
   default     = "europe-central2"
 }
+
+variable "project_iam" {
+  description = "Map of IAM roles"
+  type        = map(list(string))
+  default     = {}
+}
