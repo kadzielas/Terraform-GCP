@@ -63,3 +63,8 @@ output "users" {
   }
   description = "User details (without passwords)"
 }
+
+output "replica_name" {
+  value       = [for r in googoogle_sql_database.database.replicas : r.name]
+  description = "List of replicas name"
+}
