@@ -59,6 +59,17 @@ variable "deletion_protection" {
   default     = false
 }
 
+variable "replica_deletion_protection" {
+  description = "Prevents Terraform from destroying the replica."
+  type        = bool
+  default     = false
+}
+
+variable "replica_deletion_protection_enabled" {
+  description = "Prevents Terraform from destroying the replica."
+  type        = bool
+}
+
 variable "root_password" {
   description = "Initial password for the root user."
   type        = string
