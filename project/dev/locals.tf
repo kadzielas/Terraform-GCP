@@ -5,23 +5,32 @@ locals {
     project     = "sandbox"
     destination = "github"
   }
-  wi_members = [
-    "principalSet://iam.googleapis.com/projects/492774125441/locations/global/workloadIdentityPools/dev-alc25-wip/attribute.repository/kadzielas/Terraform-GCP"
+
+  services = [
+    "compute.googleapis.com",
+    "iam.googleapis.com",
+    "iap.googleapis.com",
+    "iamcredentials.googleapis.com",
+    "serviceusage.googleapis.com",
+    "storage-component.googleapis.com",
+    "sts.googleapis.com",
+    "sql-component.googleapis.com",
+    "sqladmin.googleapis.com"
   ]
 
-  service_accounts_roles = flatten([
-    for name, roles in module.sa.accounts_project_roles : [
-      for role in roles : {
-        role  = role
-        email = module.sa.service_account_emails[name]
-      }
-    ]
-  ])
-
-  all_project_iam = {
-    for role in distinct([for item in local.service_accounts_roles : item.role]) : role => [
-      for item in local.service_accounts_roles : "serviceAccount:${item.email}"
-      if item.role == role
+  project_iam_bindings = {
+    for role in distinct(flatten([
+      for member, roles in local.project_iam : roles
+      ])) : role => [
+      for member, roles in local.project_iam : member
+      if contains(roles, role)
     ]
   }
+
+  project_iam = merge(var.project_iam, {
+    "serviceAccount:${module.service_accounts.email["${local.prefix}sa-github"]}" = [
+      "roles/viewer",
+    ]
+    }
+  )
 }
