@@ -59,6 +59,17 @@ variable "deletion_protection" {
   default     = false
 }
 
+variable "replica_deletion_protection" {
+  description = "Prevents Terraform from destroying the replica."
+  type        = bool
+  default     = false
+}
+
+variable "replica_deletion_protection_enabled" {
+  description = "Prevents Terraform from destroying the replica."
+  type        = bool
+}
+
 variable "root_password" {
   description = "Initial password for the root user."
   type        = string
@@ -229,4 +240,45 @@ variable "user_types" {
   description = "User types (key = username, value = type)."
   type        = map(string)
   default     = {}
+}
+
+#----------------------------------------------#
+# REPLICAS
+#----------------------------------------------#
+
+variable "replicas" {
+  description = "Read replicas to create. To deploy and encrypt (CMEK) replica in different region is required to use key in the same region that replica will be deployed."
+  type = map(object({
+    region                = optional(string)
+    name                  = optional(string)
+    failover_target       = optional(bool)
+    tier                  = optional(string)
+    edition               = optional(string)
+    encryption_key_name   = optional(string)
+    availability_type     = optional(string)
+    activation_policy     = optional(string)
+    disk_type             = optional(string)
+    disk_autoresize       = optional(bool)
+    disk_autoresize_limit = optional(number)
+    disk_size             = optional(string)
+    user_labels           = map(string)
+    ip_configuration = optional(object({
+      ipv4_enabled                                  = optional(bool)
+      private_network                               = optional(string)
+      ssl_mode                                      = optional(string)
+      enable_private_path_for_google_cloud_services = optional(bool)
+    }))
+    insights_cinfig = optional(object({
+      query_insights_enabled  = optional(bool)
+      query_plans_per_minute  = optional(number)
+      query_string_length     = optional(number)
+      record_application_tags = optional(bool)
+      record_client_address   = optional(bool)
+    }), null)
+    database_flags = optional(list(object({
+      name  = string
+      value = string
+    })), [])
+  }))
+  default = null
 }
