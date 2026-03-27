@@ -33,4 +33,8 @@ locals {
     ]
     }
   )
+
+  principals = {
+    main = "principal://iam.googleapis.com/projects/${var.project_number}/locations/global/workloadIdentityPools/${var.project_id}.svc.id.goog/subject/ns/dev/main-ksa"
+  }
 }

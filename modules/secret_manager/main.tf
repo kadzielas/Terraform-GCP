@@ -16,7 +16,7 @@ resource "google_secret_manager_secret" "secret" {
         content {
           location = replicas.value.location
 
-          dynamic "cme" {
+          dynamic "cmek" {
             for_each = replicas.value.kms_key_name != null ? [1] : [0]
             content {
               kms_key_name = replicas.value.kms_key_name

@@ -1,0 +1,19 @@
+---
+apiVersion: skaffold/v4beta13
+kind: Config
+
+profiles:
+  - name: dev
+    manifests:
+      kustomize:
+        paths:
+          - overlays/dev
+
+deploy:
+  statusCheck: true
+  statusCheckDeadlineSeconds: 180
+  kubectl:
+    flags:
+      apply:
+        - "--prune"
+        - "--all"

@@ -1,7 +1,13 @@
 variable "project_id" {
-  description = "description"
+  description = "ID of project"
   type        = string
   default     = "daring-chess-474306-h4"
+}
+
+variable "project_number" {
+  description = "Number of project"
+  type        = string
+  default     = "432432634"
 }
 
 variable "location" {
@@ -20,4 +26,10 @@ variable "project_iam" {
   description = "Map of IAM roles"
   type        = map(list(string))
   default     = {}
+}
+
+variable "secret_managers" {
+  description = "List of managers with access to secrets"
+  type        = list(string)
+  default     = []
 }
